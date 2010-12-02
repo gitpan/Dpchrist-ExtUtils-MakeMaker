@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.11 2010-12-01 06:32:11 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.12 2010-12-02 03:34:11 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,13 +11,13 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.11 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.12 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
 #----------------------------------------------------------------------
 
-use Carp;
+use Carp			qw( cluck confess );
 use Data::Dumper;
 use File::Basename;
 use File::Spec::Functions;
@@ -61,7 +61,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.11 $.
+This documentation describes module revision $Revision: 1.12 $.
 
 
 This is alpha test level software
@@ -188,7 +188,7 @@ sub import
 
 =cut
 
-#----------------------------------------------------------------------
+#======================================================================
 
 =head3 mcpani
 
@@ -269,22 +269,38 @@ before I install the module:
 
 =cut
 
+#----------------------------------------------------------------------
+
 sub mcpani
 {
     print join(' ', __FILE__, __LINE__, (caller(0))[3], 'call',
 	Data::Dumper->Dump([\@_], [qw(*_)]),
     ) if DEBUG;
 
+    my $frag = '';
+
+    unless (@_ == 2) {
+	cluck join(' ', __FILE__, __LINE__, (caller(0))[3],
+	    'WARNING: requires exactly two arguments',
+	    "not generating Makefile target 'mcpani'",
+	);
+	goto DONE;
+    }
+
     my $object = shift;
 
     my ($auth) = @_;
 
-    confess join(' ',
-	'ERROR: bad CPAN author ID',
-	Data::Dumper->Dump([\@_], [qw(*_)]),
-    ) unless defined $auth && !ref($auth) && $auth =~ /^\w+$/;
+    unless (defined $auth && !ref($auth) && $auth =~ /^\w+$/) {
+	cluck join(' ',
+	    'WARNING: bad CPAN author ID --',
+	    "not generating Makefile target 'mcpani'",
+	    Data::Dumper->Dump([$auth], [qw(auth)]),
+	);
+	goto DONE;
+    }
 
-    my $frag .= <<EOF;
+    $frag .= <<EOF;
 
 mcpani ::
 
@@ -297,13 +313,15 @@ mcpani ::
 	mcpani --inject -v
 EOF
 
+  DONE:
+
     print join(' ', __FILE__, __LINE__, (caller(0))[3], 'return',
 	Data::Dumper->Dump([$frag], [qw(frag)]),
     ) if DEBUG;
     return $frag;
 }
 
-#----------------------------------------------------------------------
+#======================================================================
 
 =head3 pod2html
 
@@ -345,24 +363,38 @@ it may be given as the argument to import():
 
 =cut
 
+#----------------------------------------------------------------------
+
 sub pod2html
 {
     print join(' ', __FILE__, __LINE__, (caller(0))[3], 'call',
 	Data::Dumper->Dump([\@_], [qw(*_)]),
     ) if DEBUG;
 
+    my $frag = '';
+
+    unless (1 < @_) {
+	cluck join(' ', __FILE__, __LINE__, (caller(0))[3],
+	    'WARNING: requires two or more arguments',
+	    "not adding Makefile rules 'pod2html'",
+	);
+	goto DONE;
+    }
+
     my $object = shift;
 
     my @files = @_;
 
-    my $frag;
-
     foreach my $file (@files) {
 
-	confess join(' ',
-	    'ERROR: bad file name argument',
-	    Data::Dumper->Dump([\@_], [qw(*_)]),
-    	) unless defined $file && !ref($file) && -e $file;
+	unless (defined $file && !ref($file) && -e $file) {
+	    cluck join(' ',
+		'WARNING: bad file name argument --',
+		"not adding Makefile rules 'pod2html'",
+		Data::Dumper->Dump([$file], [qw(file)]),
+	    );
+	    next;
+	}
 
 	my $package;
 	my $version;
@@ -409,13 +441,15 @@ EOF
 
     }
 
+  DONE:
+
     print join(' ', __FILE__, __LINE__, (caller(0))[3], 'return',
 	Data::Dumper->Dump([$frag], [qw(frag)]),
     ) if DEBUG;
     return $frag;
 }
 
-#----------------------------------------------------------------------
+#======================================================================
 
 =head3 readme
 
@@ -440,22 +474,38 @@ Or,
 
 =cut
 
+#----------------------------------------------------------------------
+
 sub readme
 {
     print join(' ', __FILE__, __LINE__, (caller(0))[3], 'call',
 	Data::Dumper->Dump([\@_], [qw(*_)]),
     ) if DEBUG;
 
+    my $frag = '';
+
+    unless (@_ == 2) {
+	cluck join(' ', __FILE__, __LINE__, (caller(0))[3],
+	    'WARNING: requires exactly two arguments',
+	    "not generating Makefile target 'README'",
+	);
+	goto DONE;
+    }
+
     my $object = shift;
 
     my ($file) = @_;
 
-    confess join(' ',
-	'ERROR: bad file name argument',
-	Data::Dumper->Dump([\@_], [qw(*_)]),
-    ) unless defined $file && !ref($file) && -e $file;
+    unless (defined $file && !ref($file) && -e $file) {
+	cluck join(' ',
+	    'WARNING: bad file name argument --',
+	    "not generating Makefile target 'README'",
+	    Data::Dumper->Dump([$file], [qw(file)]),
+	);
+	goto DONE;
+    }
 
-    my $frag = <<EOF;
+    $frag .= <<EOF;
 
 all :: README
 
@@ -463,13 +513,15 @@ README :: $file
 	pod2text \$< > README
 EOF
 
+  DONE:
+
     print join(' ', __FILE__, __LINE__, (caller(0))[3], 'return',
 	Data::Dumper->Dump([$frag], [qw(frag)]),
     ) if DEBUG;
     return $frag;
 }
 
-#----------------------------------------------------------------------
+#======================================================================
 
 =head3 release
 
@@ -502,6 +554,7 @@ and use this environment variable in Makefile.PL:
 
 =cut
 
+#----------------------------------------------------------------------
 
 sub release
 {
@@ -509,21 +562,37 @@ sub release
 	Data::Dumper->Dump([\@_], [qw(*_)]),
     ) if DEBUG;
 
+    my $frag = '';
+
+    unless (@_ == 2) {
+	cluck join(' ', __FILE__, __LINE__, (caller(0))[3],
+	    'WARNING: requires exactly two arguments',
+	    "not generating Makefile target 'release'",
+	);
+	goto DONE;
+    }
+
     my $object = shift;
 
     my ($root) = @_;
 
-    confess join(' ',
-	'ERROR: bad directory name argument',
-	Data::Dumper->Dump([\@_], [qw(*_)]),
-    ) unless defined $root && !ref($root) && -d $root;
+    unless (defined $root && !ref($root) && -d $root) {
+    	cluck join(' ',
+    	    'WARNING: bad directory name argument --',
+    	    "not generating Makefile target 'release'",
+    	    Data::Dumper->Dump([$root], [qw(root)]),
+	);
+	goto DONE;
+    }
 
-    my $frag = <<EOF;
+    $frag .= <<EOF;
 
 release ::
 	mkdir -p $root/\$(DISTNAME)
 	cp -i *.tar.gz *.html $root/\$(DISTNAME)
 EOF
+
+  DONE:
 
     print join(' ', __FILE__, __LINE__, (caller(0))[3], 'return',
 	Data::Dumper->Dump([$frag], [qw(frag)]),

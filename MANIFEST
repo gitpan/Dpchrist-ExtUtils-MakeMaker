@@ -3,6 +3,10 @@ README
 Makefile.PL
 lib/Dpchrist/ExtUtils/MakeMaker.pm
 t/Dpchrist-ExtUtils-MakeMaker.t
+t/mcpani.t
+t/pod2html.t
+t/readme.t
+t/release.t
 t/test-compile-all_pm_files_ok.t
 t/test-pod-all_pod_files_ok.t
 t/test-prereq-prereq_ok.t

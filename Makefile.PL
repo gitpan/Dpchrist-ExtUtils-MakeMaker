@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: Makefile.PL,v 1.11 2010-12-01 07:07:19 dpchrist Exp $
+# $Id: Makefile.PL,v 1.12 2010-12-02 03:34:11 dpchrist Exp $
 #
 # Copyright 2010 by David Paul Christensen dpchrist@holgerdanske.com
 #
@@ -53,7 +53,10 @@ warn $@ if $@;
 WriteMakefile(
     NAME		=> 'Dpchrist::ExtUtils::MakeMaker',
     VERSION_FROM	=> 'lib/Dpchrist/ExtUtils/MakeMaker.pm',
-    PREREQ_PM		=> {},
+    PREREQ_PM		=> {
+	Capture::Tiny		=> 0,
+	File::Slurp		=> 0,
+    },
     ABSTRACT_FROM	=> 'lib/Dpchrist/ExtUtils/MakeMaker.pm',
     AUTHOR		=>
 	    'David Paul Christensen dpchrist@holgerdanske.com',
