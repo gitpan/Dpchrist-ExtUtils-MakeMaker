@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: Makefile.PL,v 1.13 2010-12-02 17:37:28 dpchrist Exp $
+# $Id: Makefile.PL,v 1.14 2010-12-02 21:31:06 dpchrist Exp $
 #
 # Copyright 2010 by David Paul Christensen dpchrist@holgerdanske.com
 #
@@ -52,8 +52,18 @@ WriteMakefile(
     NAME		=> 'Dpchrist::ExtUtils::MakeMaker',
     VERSION_FROM	=> 'lib/Dpchrist/ExtUtils/MakeMaker.pm',
     PREREQ_PM		=> {
-	Capture::Tiny		=> 0,
-	File::Slurp		=> 0,
+	Capture::Tiny			=> 0,
+	Carp				=> 0,
+	Data::Dumper			=> 0,
+	ExtUtils::MakeMaker		=> 0,
+	File::Basename			=> 0,
+	File::Slurp			=> 0,
+	File::Spec::Functions		=> 0,
+	Test::Compile			=> 0,
+	Test::Manifest			=> 0,
+	Test::More			=> 0,
+	Test::Pod			=> 0,
+	Test::Prereq			=> 0,
     },
     ABSTRACT_FROM	=> 'lib/Dpchrist/ExtUtils/MakeMaker.pm',
     AUTHOR		=>

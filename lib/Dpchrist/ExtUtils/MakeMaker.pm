@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.13 2010-12-02 17:37:29 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.14 2010-12-02 21:31:06 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.13 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.14 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -61,7 +61,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.13 $.
+This documentation describes module revision $Revision: 1.14 $.
 
 
 This is alpha test level software
@@ -631,20 +631,6 @@ Minimal:
 Complete:
 
     $ cpan Bundle::Dpchrist
-
-
-The following warnings should not prevent installation:
-
-    Can't locate Dpchrist/ExtUtils/MakeMaker.pm in @INC (@INC contains: 
-    /etc/perl /usr/local/lib/perl/5.10.0 /usr/local/share/perl/5.10.0 /u
-    sr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.10 /usr/share/perl/5.1
-    0 /usr/local/lib/site_perl .) at Makefile.PL line XX.
-
-    Can't locate Test/Manifest.pm in @INC (@INC contains: /etc/perl /usr
-    /local/lib/perl/5.10.0 /usr/local/share/perl/5.10.0 /usr/lib/perl5 /
-    usr/share/perl5 /usr/lib/perl/5.10 /usr/share/perl/5.10 /usr/local/l
-    ib/site_perl .) at (eval X) line XX.
-    BEGIN failed--compilation aborted at (eval X) line XX.
 
 
 =head2 PREREQUISITES
