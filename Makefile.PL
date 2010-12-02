@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: Makefile.PL,v 1.12 2010-12-02 03:34:11 dpchrist Exp $
+# $Id: Makefile.PL,v 1.13 2010-12-02 17:37:28 dpchrist Exp $
 #
 # Copyright 2010 by David Paul Christensen dpchrist@holgerdanske.com
 #
@@ -18,6 +18,8 @@
 # USA.
 #######################################################################
 
+use lib './lib';
+
 package Dpchrist::ExtUtils::MakeMaker;	# for symbols
 
 use ExtUtils::MakeMaker;
@@ -33,22 +35,18 @@ warn $@ if $@;
 #    return join(' ', '#', __FILE__, __LINE__, scalar localtime, "\n");
 #}
 
-eval {
-    require Dpchrist::ExtUtils::MakeMaker;
-    import  Dpchrist::ExtUtils::MakeMaker (
-	postamble => sub {
-	    my ($o, $prev) = @_;
-	    return join('',
-		$prev,
-		mcpani  ($o, $ENV{CPAN_AUTHORID}),
-		pod2html($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-		readme  ($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-		release ($o, $ENV{RELEASE_ROOT}),
-	    );
-	},
-    );
-};
-warn $@ if $@;
+use Dpchrist::ExtUtils::MakeMaker (
+    postamble => sub {
+	my ($o, $prev) = @_;
+	return join('',
+	    $prev,
+	    mcpani  ($o, $ENV{CPAN_AUTHORID}),
+	    pod2html($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
+	    readme  ($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
+	    release ($o, $ENV{RELEASE_ROOT}),
+	);
+    },
+);
 
 WriteMakefile(
     NAME		=> 'Dpchrist::ExtUtils::MakeMaker',
