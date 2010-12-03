@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: Makefile.PL,v 1.14 2010-12-02 21:31:06 dpchrist Exp $
+# $Id: Makefile.PL,v 1.16 2010-12-03 05:13:48 dpchrist Exp $
 #
 # Copyright 2010 by David Paul Christensen dpchrist@holgerdanske.com
 #
@@ -70,6 +70,12 @@ WriteMakefile(
 	    'David Paul Christensen dpchrist@holgerdanske.com',
     clean		=> {
 	FILES => q( *~tmp */*~tmp *.tar debug.log )
+    },
+    realclean		=> {
+	FILES => q( README *.html *.tar.gz ),
+    },
+    realclean		=> {
+	FILES => q( README *.html *.tar.gz ),
     },
 );
 
