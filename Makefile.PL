@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: Makefile.PL,v 1.16 2010-12-03 05:13:48 dpchrist Exp $
+# $Id: Makefile.PL,v 1.18 2010-12-04 21:56:12 dpchrist Exp $
 #
 # Copyright 2010 by David Paul Christensen dpchrist@holgerdanske.com
 #
@@ -18,9 +18,9 @@
 # USA.
 #######################################################################
 
-use lib './lib';
-
 package Dpchrist::ExtUtils::MakeMaker;	# for symbols
+
+use lib './lib';
 
 use ExtUtils::MakeMaker;
 
@@ -35,35 +35,40 @@ warn $@ if $@;
 #    return join(' ', '#', __FILE__, __LINE__, scalar localtime, "\n");
 #}
 
-use Dpchrist::ExtUtils::MakeMaker (
-    postamble => sub {
-	my ($o, $prev) = @_;
-	return join('',
-	    $prev,
-	    mcpani  ($o, $ENV{CPAN_AUTHORID}),
-	    pod2html($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-	    readme  ($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-	    release ($o, $ENV{RELEASE_ROOT}),
-	);
-    },
-);
+eval {
+    require Dpchrist::ExtUtils::MakeMaker;
+    die 'Skipping Dpchrist::ExtUtils::MakeMaker'
+    	unless 1.013 <= $Dpchrist::ExtUtils::MakeMaker::VERSION;
+    import Dpchrist::ExtUtils::MakeMaker (
+	postamble => sub {
+	    my ($o, $prev) = @_;
+	    return join('',
+		$prev,
+		mcpani  ($o, $ENV{CPAN_AUTHORID}),
+		pod2html($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
+		readme  ($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
+		release ($o, $ENV{RELEASE_ROOT}),
+	    );
+	},
+    );
+};
+warn $@ if $@;
 
 WriteMakefile(
     NAME		=> 'Dpchrist::ExtUtils::MakeMaker',
     VERSION_FROM	=> 'lib/Dpchrist/ExtUtils/MakeMaker.pm',
     PREREQ_PM		=> {
-	Capture::Tiny			=> 0,
-	Carp				=> 0,
-	Data::Dumper			=> 0,
-	ExtUtils::MakeMaker		=> 0,
-	File::Basename			=> 0,
-	File::Slurp			=> 0,
-	File::Spec::Functions		=> 0,
-	Test::Compile			=> 0,
-	Test::Manifest			=> 0,
-	Test::More			=> 0,
-	Test::Pod			=> 0,
-	Test::Prereq			=> 0,
+	Capture::Tiny			=> 0.06,
+	Carp				=> 1.08,
+	Data::Dumper			=> 2.121_14,
+	File::Basename			=> 2.76,
+	File::Slurp			=> 9999.13,
+	File::Spec::Functions		=> 3.2501,
+	Test::Compile			=> 0.10,
+	Test::Manifest			=> 1.22,
+	Test::More			=> 0.72,
+	Test::Pod			=> 1.40,
+	Test::Prereq			=> 1.037,
     },
     ABSTRACT_FROM	=> 'lib/Dpchrist/ExtUtils/MakeMaker.pm',
     AUTHOR		=>
