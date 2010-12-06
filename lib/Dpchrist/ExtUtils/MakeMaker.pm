@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.16 2010-12-04 21:43:12 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.17 2010-12-06 03:59:24 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.16 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.17 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -61,7 +61,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.16 $.
+This documentation describes module revision $Revision: 1.17 $.
 
 
 This is alpha test level software
@@ -287,6 +287,12 @@ sub mcpani
 	goto DONE;
     }
 
+    my $r = eval { `mcpani --help 2>&1` };
+    if ($! || $@ || !$r) {
+	warn "Skipping 'mcpani': $!";
+	goto DONE;
+    }
+
     my $object = shift;
 
     my ($auth) = @_;
@@ -378,6 +384,12 @@ sub pod2html
 	    'WARNING: requires two or more arguments',
 	    "not adding Makefile rules 'pod2html'",
 	);
+	goto DONE;
+    }
+
+    my $r = eval { `pod2html --help 2>&1` };
+    if ($! || $@ || !$r) {
+	warn "Skipping 'pod2html': $!";
 	goto DONE;
     }
 
@@ -489,6 +501,12 @@ sub readme
 	    'WARNING: requires exactly two arguments',
 	    "not generating Makefile target 'README'",
 	);
+	goto DONE;
+    }
+
+    my $r = eval { `pod2text --help 2>&1` };
+    if ($! || $@ || !$r) {
+	warn "Skipping 'README': $!";
 	goto DONE;
     }
 

@@ -61,6 +61,7 @@ WriteMakefile(
 	Capture::Tiny			=> 0.06,
 	Carp				=> 1.08,
 	Data::Dumper			=> 2.121_14,
+	ExtUtils::MakeMaker		=> 6.54,
 	File::Basename			=> 2.76,
 	File::Slurp			=> 9999.13,
 	File::Spec::Functions		=> 3.2501,

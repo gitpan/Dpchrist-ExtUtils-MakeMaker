@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Dpchrist-ExtUtils-MakeMaker
-version:            1.016
+version:            1.017
 abstract:           additional Makefile targets and rules
 author:
     - David Paul Christensen dpchrist@holgerdanske.com
@@ -14,6 +14,7 @@ requires:
     Capture::Tiny:        0.06
     Carp:                 1.08
     Data::Dumper:         2.12114
+    ExtUtils::MakeMaker:  6.54
     File::Basename:       2.76
     File::Slurp:          9999.13
     File::Spec::Functions:  3.2501
