@@ -10,15 +10,17 @@ SYNOPSIS
 
         eval {
             require Dpchrist::ExtUtils::MakeMaker;
-            import  Dpchrist::ExtUtils::MakeMaker (
+            die 'Skipping Dpchrist::ExtUtils::MakeMaker'
+                unless 1.013 <= $Dpchrist::ExtUtils::MakeMaker::VERSION;
+            import Dpchrist::ExtUtils::MakeMaker (
                 postamble => sub {
                     my ($o, $prev) = @_;
                     return join('',
                         $prev,
-                        mcpani(  $o, $ENV{CPAN_AUTHORID}),
+                        mcpani  ($o, $ENV{CPAN_AUTHORID}),
                         pod2html($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-                        readme(  $o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-                        release( $o, $ENV{RELEASE_ROOT}),
+                        readme  ($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
+                        release ($o, $ENV{RELEASE_ROOT}),
                     );
                 },
             );
@@ -30,7 +32,7 @@ SYNOPSIS
         );
 
 DESCRIPTION
-    This documentation describes module revision $Revision: 1.17 $.
+    This documentation describes module revision $Revision: 1.18 $.
 
     This is alpha test level software and may change or disappear at any
     time.

@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: Makefile.PL,v 1.18 2010-12-04 21:56:12 dpchrist Exp $
+# $Id: Makefile.PL,v 1.19 2010-12-07 22:42:06 dpchrist Exp $
 #
 # Copyright 2010 by David Paul Christensen dpchrist@holgerdanske.com
 #

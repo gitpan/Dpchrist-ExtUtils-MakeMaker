@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.17 2010-12-06 03:59:24 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.18 2010-12-07 22:42:06 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.17 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.18 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -39,15 +39,17 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
     eval {
 	require Dpchrist::ExtUtils::MakeMaker;
-	import  Dpchrist::ExtUtils::MakeMaker (
+	die 'Skipping Dpchrist::ExtUtils::MakeMaker'
+	    unless 1.013 <= $Dpchrist::ExtUtils::MakeMaker::VERSION;
+	import Dpchrist::ExtUtils::MakeMaker (
 	    postamble => sub {
 		my ($o, $prev) = @_;
 		return join('',
 		    $prev,
-		    mcpani(  $o, $ENV{CPAN_AUTHORID}),
+		    mcpani  ($o, $ENV{CPAN_AUTHORID}),
 		    pod2html($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-		    readme(  $o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
-		    release( $o, $ENV{RELEASE_ROOT}),
+		    readme  ($o, 'lib/Dpchrist/ExtUtils/MakeMaker.pm'),
+		    release ($o, $ENV{RELEASE_ROOT}),
 		);
 	    },
 	);
@@ -61,7 +63,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.17 $.
+This documentation describes module revision $Revision: 1.18 $.
 
 
 This is alpha test level software
