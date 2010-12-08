@@ -1,4 +1,4 @@
-# $Id: release.t,v 1.2 2010-12-07 22:42:06 dpchrist Exp $
+# $Id: release.t,v 1.3 2010-12-08 19:30:57 dpchrist Exp $
 
 use Dpchrist::ExtUtils::MakeMaker;
 
@@ -25,7 +25,7 @@ die join(' ',
     'incorrect Dpchrist::ExtUtils::MakeMaker.pm version detected',
     Data::Dumper->Dump([$version], [qw(version)]),
     Data::Dumper->Dump([\%INC], [qw(*INC)]),
-) unless $version eq '1.018';
+) unless $version eq '1.019';
 
 my ($r, $s);
 my ($stdout, $stderr);
@@ -44,8 +44,8 @@ ok (								#     1
     'call with no arguments should return empty string ' .
     'and issue warning'
 ) or confess join(' ',
-    Data::Dumper->Dump([$stdout, $stderr, $r, $@],
-		     [qw(stdout   stderr   r   @)]),
+    Data::Dumper->Dump([$o, $stdout, $stderr, $r, $@],
+		     [qw(o   stdout   stderr   r   @)]),
 );
 
 ($stdout, $stderr) = capture {
@@ -61,8 +61,8 @@ ok (								#     2
     'call with one argument should return empty string ' .
     'and issue warning'
 ) or confess join(' ',
-    Data::Dumper->Dump([$stdout, $stderr, $r, $@],
-		     [qw(stdout   stderr   r   @)]),
+    Data::Dumper->Dump([$o, $stdout, $stderr, $r, $@],
+		     [qw(o   stdout   stderr   r   @)]),
 );
 
 ($stdout, $stderr) = capture {
@@ -78,7 +78,8 @@ ok (								#     3
     'call with bad directory should return empty string' .
     'and generate warning'
 ) or confess join(' ',
-    Data::Dumper->Dump([$s, $r, $@], [qw(s r @)]),
+    Data::Dumper->Dump([$o, $stdout, $stderr, $r, $@],
+		     [qw(o   stdout   stderr   r   @)]),
 );
 
 $r = eval {
@@ -92,6 +93,7 @@ ok (								#     4
     && $r =~ /release.+$s/s,
     'call with correct arguments should generate Makefile fragment'
 ) or confess join(' ',
-    Data::Dumper->Dump([$s, $r, $@], [qw(s r @)]),
+    Data::Dumper->Dump([$s, $r, $@],
+		     [qw(s   r   @)]),
 );
 
