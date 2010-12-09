@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.19 2010-12-08 19:30:57 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.20 2010-12-09 21:17:15 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.19 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.20 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -63,7 +63,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.19 $.
+This documentation describes module revision $Revision: 1.20 $.
 
 
 This is alpha test level software
@@ -508,7 +508,7 @@ sub readme
 
     my $r = eval { `pod2text --help 2>&1` };
     if ($! || $@ || !$r) {
-	warn "Skipping 'README': $!";
+	warn "Skipping 'readme': pod2text: $!";
 	goto DONE;
     }
 
@@ -589,6 +589,16 @@ sub release
 	    'WARNING: requires exactly two arguments',
 	    "not generating Makefile target 'release'",
 	);
+	goto DONE;
+    }
+
+    if (system 'mkdir --help >/dev/null') {	# errmsg on STDERR
+	warn "Skipping 'release'";
+	goto DONE;
+    }
+
+    if (system 'rm --help >/dev/null') {	# errmsg on STDERR
+	warn "Skipping 'release'";
 	goto DONE;
     }
 

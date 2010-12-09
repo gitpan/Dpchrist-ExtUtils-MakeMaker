@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Dpchrist-ExtUtils-MakeMaker
-version:            1.019
+version:            1.020
 abstract:           additional Makefile targets and rules
 author:
     - David Paul Christensen dpchrist@holgerdanske.com

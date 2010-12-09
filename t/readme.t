@@ -1,8 +1,15 @@
-# $Id: readme.t,v 1.3 2010-12-08 19:30:57 dpchrist Exp $
+# $Id: readme.t,v 1.4 2010-12-09 21:17:16 dpchrist Exp $
+
+use Test::More;
+
+eval { `pod2text --help 2>&1` };
+if ($! || $@) {
+    plan skip_all => "pod2text: $!";			# calls exit 0
+}
+
+plan tests			=> 4;
 
 use Dpchrist::ExtUtils::MakeMaker;
-
-use Test::More tests		=> 4;
 
 use Capture::Tiny		qw( capture );
 use Carp;
@@ -12,21 +19,6 @@ use ExtUtils::MakeMaker;
 
 $|				= 1;
 $Data::Dumper::Sortkeys		= 1;
-
-my $inc = $INC{'Dpchrist/ExtUtils/MakeMaker.pm'};
-
-die join(' ',
-    'incorrect path to Dpchrist::ExtUtils::MakeMaker.pm detected',
-    Data::Dumper->Dump([\%INC], [qw(*INC)]),
-) unless $inc =~ /lib\/Dpchrist\/ExtUtils\/MakeMaker.pm$/;
-
-my $version = MM->parse_version($inc);
-
-die join(' ',
-    'incorrect Dpchrist::ExtUtils::MakeMaker.pm version detected',
-    Data::Dumper->Dump([$version], [qw(version)]),
-    Data::Dumper->Dump([\%INC], [qw(*INC)]),
-) unless $version eq '1.019';
 
 my ($r, $s);
 my ($stdout, $stderr);
