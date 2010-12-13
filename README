@@ -32,7 +32,7 @@ SYNOPSIS
         );
 
 DESCRIPTION
-    This documentation describes module revision $Revision: 1.20 $.
+    This documentation describes module revision $Revision: 1.21 $.
 
     This is alpha test level software and may change or disappear at any
     time.
@@ -192,6 +192,8 @@ DESCRIPTION
 
     Note that you should run 'make dist' to create the distribution tarball
     before running 'make mcpani'.
+
+    RELEASE_ROOT must exist prior to running 'make release'.
 
     OBJECT is the object provided by ExtUtils::MakeMaker internals.
 

@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.20 2010-12-09 21:17:15 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.21 2010-12-13 01:00:26 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.20 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.21 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -63,7 +63,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.20 $.
+This documentation describes module revision $Revision: 1.21 $.
 
 
 This is alpha test level software
@@ -560,6 +560,8 @@ when the following commands are issued:
 Note that you should run 'make dist'
 to create the distribution tarball before running 'make mcpani'.
 
+RELEASE_ROOT must exist prior to running 'make release'.
+
 OBJECT is the object provided by ExtUtils::MakeMaker internals.
 
 I set an environment variable in my .bash_profile:
@@ -592,16 +594,6 @@ sub release
 	goto DONE;
     }
 
-    if (system 'mkdir --help >/dev/null') {	# errmsg on STDERR
-	warn "Skipping 'release'";
-	goto DONE;
-    }
-
-    if (system 'rm --help >/dev/null') {	# errmsg on STDERR
-	warn "Skipping 'release'";
-	goto DONE;
-    }
-
     my $object = shift;
 
     my ($root) = @_;
@@ -618,9 +610,17 @@ sub release
     $frag .= <<EOF;
 
 release ::
-	mkdir -p $root/\$(DISTNAME)
-	cp -i *.tar.gz *.html $root/\$(DISTNAME)
+	\$(CP) *.tar.gz $root\$(DFSEP)\$(DISTNAME)
 EOF
+
+    my $r = eval { `pod2html --help 2>&1` };
+    unless ($! || $@ || !$r) {
+	$frag .= <<EOF2;
+
+release ::
+	\$(CP) *.html $root\$(DFSEP)\$(DISTNAME)
+EOF2
+    }
 
   DONE:
 
