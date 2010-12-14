@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.22 2010-12-14 00:02:18 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.23 2010-12-14 15:44:58 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.22 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.23 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -63,7 +63,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.22 $.
+This documentation describes module revision $Revision: 1.23 $.
 
 
 This is alpha test level software
@@ -444,7 +444,7 @@ sub pod2html
 all :: $html
 
 $html :: $file
-	pod2html \$< > $html
+	pod2html $file > $html
 	\$(RM_F) pod2htm?.tmp
 EOF
 
@@ -525,7 +525,7 @@ sub readme
 all :: README
 
 README :: $file
-	pod2text \$< > README
+	pod2text $file > README
 EOF
 
   DONE:
