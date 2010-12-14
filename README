@@ -32,7 +32,7 @@ SYNOPSIS
         );
 
 DESCRIPTION
-    This documentation describes module revision $Revision: 1.21 $.
+    This documentation describes module revision $Revision: 1.22 $.
 
     This is alpha test level software and may change or disappear at any
     time.
@@ -134,7 +134,7 @@ DESCRIPTION
     commands:
 
         pod2html FILE > PACKAGE-VERSION.html
-        rm -f pod2htm?.tmp
+        $(RM_F) pod2htm?.tmp
 
     PACKAGE and VERSION are determined by reading FILE:
 
@@ -155,10 +155,6 @@ DESCRIPTION
     Or,
 
         $ make all
-
-    If there is only one FILE, it may be given as the argument to import():
-
-        pod2html => FILE,
 
    readme
         my $frag = readme(OBJECT, FILE);

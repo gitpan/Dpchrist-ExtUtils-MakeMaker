@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.21 2010-12-13 01:00:26 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.22 2010-12-14 00:02:18 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.21 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.22 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -63,7 +63,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.21 $.
+This documentation describes module revision $Revision: 1.22 $.
 
 
 This is alpha test level software
@@ -341,7 +341,7 @@ which will run 'pod2html' against the files in LIST
 using the commands:
 
     pod2html FILE > PACKAGE-VERSION.html
-    rm -f pod2htm?.tmp
+    $(RM_F) pod2htm?.tmp
 
 PACKAGE and VERSION are determined by reading FILE:
 
@@ -363,11 +363,6 @@ whenever the following commands are issued:
 Or,
 
     $ make all
-
-If there is only one FILE,
-it may be given as the argument to import():
-
-    pod2html => FILE,
 
 =cut
 
@@ -450,7 +445,7 @@ all :: $html
 
 $html :: $file
 	pod2html \$< > $html
-	rm -f pod2htm?.tmp
+	\$(RM_F) pod2htm?.tmp
 EOF
 
     }
