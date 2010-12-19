@@ -1,12 +1,6 @@
-# $Id: release.t,v 1.4 2010-12-09 21:17:16 dpchrist Exp $
+# $Id: release.t,v 1.5 2010-12-19 06:34:55 dpchrist Exp $
 
 use Test::More;
-
-system 'mkdir --help >/dev/null'
-    and plan skip_all => "'mkdir' not working";		# calls exit 0
-
-system 'rm --help >/dev/null'
-    and plan skip_all => "'rm' not working";		# calls exit 0
 
 plan tests			=> 4;
 
@@ -16,6 +10,7 @@ use Capture::Tiny		qw( capture );
 use Carp;
 use Data::Dumper;
 use ExtUtils::MakeMaker;
+use File::Basename;
 
 $|				= 1;
 $Data::Dumper::Sortkeys		= 1;
@@ -67,7 +62,7 @@ ok (								#     3
     !$@
     && defined $r
     && $r eq ''
-    && $stderr =~ /WARNING: bad directory name/s,
+    && $stderr =~ /WARNING.*bad argument RELEASE_ROOT/s,
     'call with bad directory should return empty string' .
     'and generate warning'
 ) or confess join(' ',
@@ -76,7 +71,7 @@ ok (								#     3
 );
 
 $r = eval {
-    $s = join '', __FILE__, __LINE__, '~tmp';
+    $s = join '', basename(__FILE__), __LINE__, '~tmp';
     mkdir $s;
     Dpchrist::ExtUtils::MakeMaker::release($o, $s);
 };

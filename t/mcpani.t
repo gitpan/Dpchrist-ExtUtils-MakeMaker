@@ -1,11 +1,10 @@
-# $Id: mcpani.t,v 1.4 2010-12-09 21:17:16 dpchrist Exp $
+# $Id: mcpani.t,v 1.6 2010-12-19 06:48:24 dpchrist Exp $
 
+use Capture::Tiny		qw( capture );
 use Test::More;
 
-eval { `mcpani --help 2>&1` };
-if ($! || $@) {
-    plan skip_all => "mcpani: $!";			# calls exit 0
-}
+my ($stdout, $stderr) = capture { system 'mcpani --help' };
+plan skip_all => "command 'mcpani' not installed" if $stderr;
 
 plan tests			=> 4;
 
@@ -20,7 +19,6 @@ $|				= 1;
 $Data::Dumper::Sortkeys		= 1;
 
 my ($r, $s);
-my ($stdout, $stderr);
 my $o = bless {}, 'Foo';
 
 ($stdout, $stderr) = capture {
@@ -66,7 +64,7 @@ ok (								#     3
     !$@
     && defined $r
     && $r eq ''
-    && $stderr =~ /WARNING: bad CPAN author ID/s,
+    && $stderr =~ /WARNING.*bad argument AUTHORID/s,
     'call with bad CPAN author ID should return empty string ' .
     'and generate warning'
 ) or confess join(' ',
