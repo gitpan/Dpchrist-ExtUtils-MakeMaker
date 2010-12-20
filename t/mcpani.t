@@ -1,14 +1,18 @@
-# $Id: mcpani.t,v 1.6 2010-12-19 06:48:24 dpchrist Exp $
+# $Id: mcpani.t,v 1.7 2010-12-20 01:33:30 dpchrist Exp $
+
+use Dpchrist::ExtUtils::MakeMaker;
 
 use Capture::Tiny		qw( capture );
 use Test::More;
 
-my ($stdout, $stderr) = capture { system 'mcpani --help' };
-plan skip_all => "command 'mcpani' not installed" if $stderr;
+my $prog = 'mcpani';
+plan skip_all => "command '$prog' not installed"
+    unless (Dpchrist::ExtUtils::MakeMaker::_is_program_installed
+	"$prog --help"
+    );
 
 plan tests			=> 4;
 
-use Dpchrist::ExtUtils::MakeMaker;
 
 use Capture::Tiny		qw( capture );
 use Carp;

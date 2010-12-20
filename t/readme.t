@@ -1,14 +1,17 @@
-# $Id: readme.t,v 1.5 2010-12-19 06:34:55 dpchrist Exp $
+# $Id: readme.t,v 1.6 2010-12-20 01:33:30 dpchrist Exp $
+
+use Dpchrist::ExtUtils::MakeMaker;
 
 use Capture::Tiny		qw( capture );
 use Test::More;
 
-my ($stdout, $stderr) = capture { system 'pod2text --help' };
-plan skip_all => "command 'pod2text' not installed" if $stderr;
+my $prog = 'pod2text';
+plan skip_all => "command '$prog' not installed"
+    unless (Dpchrist::ExtUtils::MakeMaker::_is_program_installed
+	"$prog --help"
+    );
 
 plan tests			=> 4;
-
-use Dpchrist::ExtUtils::MakeMaker;
 
 use Capture::Tiny		qw( capture );
 use Carp;

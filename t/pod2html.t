@@ -1,15 +1,17 @@
-# $Id: pod2html.t,v 1.6 2010-12-19 06:45:30 dpchrist Exp $
+# $Id: pod2html.t,v 1.7 2010-12-20 01:33:30 dpchrist Exp $
+
+use Dpchrist::ExtUtils::MakeMaker;
 
 use Capture::Tiny		qw( capture );
 use Test::More;
 
-my ($stdout, $stderr) = capture { system 'pod2html --help' };
-plan skip_all => "command 'pod2html' not installed"
-    unless $stderr =~ /Usage:.*pod2html/;
+my $prog = 'pod2html';
+plan skip_all => "command '$prog' not installed"
+    unless (Dpchrist::ExtUtils::MakeMaker::_is_program_installed
+	"$prog --help"
+    );
 
 plan tests			=> 4;
-
-use Dpchrist::ExtUtils::MakeMaker;
 
 use Capture::Tiny		qw( capture );
 use Carp;
