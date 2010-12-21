@@ -1,4 +1,4 @@
-# $Id: pod2html.t,v 1.7 2010-12-20 01:33:30 dpchrist Exp $
+# $Id: pod2html.t,v 1.8 2010-12-20 03:51:10 dpchrist Exp $
 
 use Dpchrist::ExtUtils::MakeMaker;
 
@@ -79,10 +79,10 @@ ok (								#     3
 );
 
 $r = eval {
-    $s = join ' ', basename(__FILE__), __LINE__, '~tmp';
+    $s = join ' ', basename(basename(__FILE__)), __LINE__, '~tmp';
     my $s2 = join("\n",
-	'package'     . basename(__FILE__) .       __LINE__ . ';',
-	'$VERSION = ' . basename(__LINE__) . '.' . __LINE__ . ';',
+	'package'     . basename(basename(__FILE__)) .       __LINE__ . ';',
+	'$VERSION = ' . __LINE__ . '.' . __LINE__ . ';',
     );
     write_file($s, $s2);
     Dpchrist::ExtUtils::MakeMaker::pod2html($o, $s);

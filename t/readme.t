@@ -1,4 +1,4 @@
-# $Id: readme.t,v 1.6 2010-12-20 01:33:30 dpchrist Exp $
+# $Id: readme.t,v 1.7 2010-12-20 03:51:10 dpchrist Exp $
 
 use Dpchrist::ExtUtils::MakeMaker;
 
@@ -79,8 +79,8 @@ ok (								#     3
 );
 
 $r = eval {
-    $s = join '', basename(__FILE__), __LINE__, '~tmp';
-    write_file($s, __FILE__, __LINE__);
+    $s = join '', basename(basename(__FILE__)), __LINE__, '~tmp';
+    write_file($s, basename(__FILE__), __LINE__);
     Dpchrist::ExtUtils::MakeMaker::readme($o, $s);
 };
 ok (								#     4

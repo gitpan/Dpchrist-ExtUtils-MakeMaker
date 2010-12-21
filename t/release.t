@@ -1,4 +1,4 @@
-# $Id: release.t,v 1.5 2010-12-19 06:34:55 dpchrist Exp $
+# $Id: release.t,v 1.6 2010-12-20 03:51:10 dpchrist Exp $
 
 use Test::More;
 
@@ -71,7 +71,7 @@ ok (								#     3
 );
 
 $r = eval {
-    $s = join '', basename(__FILE__), __LINE__, '~tmp';
+    $s = join '', basename(basename(__FILE__)), __LINE__, '~tmp';
     mkdir $s;
     Dpchrist::ExtUtils::MakeMaker::release($o, $s);
 };

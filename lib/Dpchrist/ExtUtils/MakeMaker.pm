@@ -1,5 +1,5 @@
 #######################################################################
-# $Id: MakeMaker.pm,v 1.25 2010-12-20 01:33:30 dpchrist Exp $
+# $Id: MakeMaker.pm,v 1.27 2010-12-21 05:14:45 dpchrist Exp $
 #######################################################################
 # package:
 #----------------------------------------------------------------------
@@ -11,7 +11,7 @@ use constant DEBUG		=> 0;
 use strict;
 use warnings;
 
-our $VERSION  = sprintf "%d.%03d", q$Revision: 1.25 $ =~ /(\d+)/g;
+our $VERSION  = sprintf "%d.%03d", q$Revision: 1.27 $ =~ /(\d+)/g;
 
 #######################################################################
 # uses:
@@ -64,7 +64,7 @@ Dpchrist::ExtUtils::MakeMaker - additional Makefile targets and rules
 
 =head1 DESCRIPTION
 
-This documentation describes module revision $Revision: 1.25 $.
+This documentation describes module revision $Revision: 1.27 $.
 
 
 This is alpha test level software
@@ -618,14 +618,14 @@ sub release
     $frag .= <<EOF;
 
 release ::
-	\$(CP) *.tar.gz $root\$(DFSEP)\$(DISTNAME)
+	\$(CP) *.tar.gz $root\$(DFSEP)\$(DISTNAME)\$(DFSEP).
 EOF
 
     if (_is_program_installed 'pod2html --help') {
 	$frag .= <<EOF2;
 
 release ::
-	\$(CP) *.html $root\$(DFSEP)\$(DISTNAME)
+	\$(CP) *.html $root\$(DFSEP)\$(DISTNAME)\$(DFSEP).
 EOF2
     }
 
